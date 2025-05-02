@@ -1,0 +1,2214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treinamento: Estoque e Logística | Matheus Castro Mendes</title>
+    <meta name="description" content="Treinamento profissional completo sobre gestão de estoque e logística">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a4b8c;
+            --primary-light: #2c7bb6;
+            --primary-dark: #0d2b52;
+            --secondary-color: #ff7f00;
+            --secondary-light: #ff9e40;
+            --secondary-dark: #c45e00;
+            --accent-color: #4caf50;
+            --light-bg: #f8fafc;
+            --dark-bg: #1e293b;
+            --text-color: #334155;
+            --light-text: #f8fafc;
+            --border-color: #e2e8f0;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --info-color: #17a2b8;
+            --font-heading: 'Roboto', Arial, sans-serif;
+            --font-body: 'Open Sans', 'Helvetica Neue', sans-serif;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --max-width: 1200px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+            padding-top: 80px;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            line-height: 1.2;
+            font-weight: 600;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: var(--light-text);
+        }
+
+        h2 {
+            font-size: 2rem;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin-top: 1.5rem;
+            color: var(--primary-light);
+        }
+
+        h4 {
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+        }
+
+        p {
+            margin-bottom: 1rem;
+            font-size: 1.05rem;
+        }
+
+        a {
+            color: var(--primary-light);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        a:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+
+        a:focus {
+            outline: 2px solid var(--secondary-color);
+            outline-offset: 2px;
+        }
+
+        ul, ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1.2rem;
+        }
+
+        ul li::before {
+            content: "•";
+            color: var(--secondary-color);
+            position: absolute;
+            left: 0;
+        }
+
+        ol {
+            counter-reset: item;
+        }
+
+        ol li {
+            counter-increment: item;
+        }
+
+        ol li::before {
+            content: counter(item) ".";
+            color: var(--secondary-color);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        strong {
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+
+        /* Layout */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            padding: 3rem 0;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .section:nth-child(even) {
+            background-color: white;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+            color: var(--light-text);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            font-family: var(--font-heading);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo i {
+            color: var(--secondary-color);
+        }
+
+        .contact-info {
+            text-align: right;
+            font-size: 0.9rem;
+        }
+
+        .contact-info div {
+            margin-bottom: 0.2rem;
+        }
+
+        /* Navegação */
+        nav {
+            background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+            padding: 0.75rem 0;
+            position: sticky;
+            top: 80px;
+            z-index: 900;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .nav-link {
+            color: var(--light-text);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .nav-link i {
+            font-size: 0.9rem;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            text-decoration: none;
+            transform: translateY(-2px);
+        }
+
+        /* Introdução */
+        .intro {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') no-repeat center center/cover;
+            color: var(--light-text);
+            padding: 5rem 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .intro p {
+            max-width: 800px;
+            margin: 0 auto 1rem;
+            font-size: 1.2rem;
+            line-height: 1.7;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border-radius: var(--radius-md);
+            margin-top: 1.5rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: var(--transition);
+            box-shadow: var(--shadow-md);
+        }
+
+        .cta-button:hover {
+            background-color: var(--secondary-dark);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+            text-decoration: none;
+        }
+
+        /* Módulos */
+        .module {
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .module-title {
+            background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+            color: var(--light-text);
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius-md) var(--radius-md) 0 0;
+            margin-bottom: 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .module-title i {
+            font-size: 1.2rem;
+        }
+
+        .module-content {
+            background-color: white;
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            border-top: none;
+            border-radius: 0 0 var(--radius-md) var(--radius-md);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Exemplos Práticos */
+        .example-box {
+            background-color: #f0f7ff;
+            border-left: 4px solid var(--accent-color);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .example-box h4 {
+            color: var(--accent-color);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .example-box h4 i {
+            font-size: 1.1rem;
+        }
+
+        .example-box::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background-color: var(--accent-color);
+        }
+
+        /* Tabelas */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            box-shadow: var(--shadow-md);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            font-weight: 500;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        tr:hover {
+            background-color: #f1f5f9;
+        }
+
+        /* Cards */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            transition: var(--transition);
+            border: 1px solid var(--border-color);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        /* Botão Voltar ao Topo */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: var(--light-text);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 999;
+        }
+
+        .back-to-top.visible {
+            opacity: 0.9;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            opacity: 1;
+            transform: translateY(-3px);
+            text-decoration: none;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--dark-bg), #0f172a);
+            color: var(--light-text);
+            padding: 3rem 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            text-align: left;
+        }
+
+        .footer-contact {
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-contact h3 {
+            color: var(--light-text);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .footer-contact p {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-contact i {
+            color: var(--secondary-color);
+            width: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: var(--light-text);
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        .quick-links h4, .newsletter h4 {
+            color: var(--light-text);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .quick-links ul {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .quick-links li {
+            margin-bottom: 0.75rem;
+            padding-left: 0;
+        }
+
+        .quick-links li::before {
+            content: none;
+        }
+
+        .quick-links a {
+            color: var(--light-text);
+            opacity: 0.8;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quick-links a:hover {
+            opacity: 1;
+            color: var(--secondary-color);
+            padding-left: 5px;
+        }
+
+        .quick-links i {
+            font-size: 0.8rem;
+            color: var(--secondary-color);
+        }
+
+        .newsletter p {
+            opacity: 0.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-family: var(--font-body);
+        }
+
+        .newsletter-form button {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0 1.5rem;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .newsletter-form button:hover {
+            background-color: var(--secondary-dark);
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background-color: transparent;
+            z-index: 900;
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+            width: 0%;
+            transition: width 0.1s ease-out;
+        }
+
+        /* Tooltips */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            border-bottom: 1px dotted var(--primary-color);
+            cursor: help;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: var(--primary-dark);
+            color: var(--light-text);
+            text-align: center;
+            border-radius: var(--radius-sm);
+            padding: 0.5rem;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.9rem;
+            font-weight: normal;
+        }
+
+        .tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: var(--primary-dark) transparent transparent transparent;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Accordion */
+        .accordion {
+            margin: 1.5rem 0;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .accordion-item {
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .accordion-item:last-child {
+            border-bottom: none;
+        }
+
+        .accordion-header {
+            background-color: #f8fafc;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .accordion-header:hover {
+            background-color: #f1f5f9;
+        }
+
+        .accordion-header i {
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-header.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .accordion-header.active i {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            background-color: white;
+        }
+
+        .accordion-content.show {
+            padding: 1rem 1.5rem;
+            max-height: 5000px;
+        }
+
+        /* Seção de Doação */
+        .donation-container {
+            margin: 2rem 0;
+            font-family: var(--font-body);
+        }
+        
+        .donation-box {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 0 auto;
+            border: 1px solid #dee2e6;
+        }
+        
+        .donation-box h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .donation-box p {
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+        }
+        
+        .donation-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .donation-btn:hover, .donation-btn:focus {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+            outline: none;
+        }
+        
+        .pix-details {
+            display: none;
+            margin-top: 1.5rem;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .pix-info {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .pix-info p {
+            margin-bottom: 0.5rem;
+        }
+        
+        .pix-qrcode {
+            margin: 1rem 0;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            display: inline-block;
+            border: 1px solid #eee;
+        }
+        
+        .instruction {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 1rem !important;
+        }
+        
+        .copy-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .copy-btn:hover, .copy-btn:focus {
+            background-color: var(--secondary-dark);
+            outline: none;
+        }
+
+        /* Responsividade */
+        @media (max-width: 992px) {
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+            
+            .contact-info {
+                text-align: center;
+                margin-top: 0.5rem;
+            }
+            
+            nav {
+                top: 120px;
+            }
+            
+            .nav-container {
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding-bottom: 0.5rem;
+                scrollbar-width: thin;
+                scrollbar-color: var(--primary-light) var(--primary-dark);
+            }
+            
+            .nav-container::-webkit-scrollbar {
+                height: 5px;
+            }
+            
+            .nav-container::-webkit-scrollbar-track {
+                background: var(--primary-dark);
+            }
+            
+            .nav-container::-webkit-scrollbar-thumb {
+                background-color: var(--primary-light);
+                border-radius: 10px;
+            }
+            
+            .nav-link {
+                white-space: nowrap;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            .progress-container {
+                top: 120px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding-top: 160px;
+            }
+            
+            nav {
+                top: 160px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.6rem;
+            }
+
+            .module-content {
+                padding: 1.5rem;
+            }
+
+            .progress-container {
+                top: 160px;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .newsletter-form button {
+                padding: 0.75rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .intro {
+                padding: 3rem 0;
+            }
+
+            .intro p {
+                font-size: 1rem;
+            }
+
+            .section {
+                padding: 2rem 0;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+    </style>
+</head>
+<body>
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Header -->
+    <header id="mainHeader">
+        <div class="container header-container">
+            <div class="logo">
+                <i class="fas fa-boxes" aria-hidden="true"></i>
+                <span>Treinamento Estoque & Logística</span>
+            </div>
+            <div class="contact-info">
+                <div><i class="fas fa-user" aria-hidden="true"></i> Matheus Castro Mendes</div>
+                <div><i class="fas fa-briefcase" aria-hidden="true"></i> Logística - Gestão de Estoques</div>
+                <div><i class="fas fa-phone" aria-hidden="true"></i> (98) 98133-7601 | <i class="fas fa-envelope" aria-hidden="true"></i> matheusmendespessoal@gmail.com</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navegação -->
+    <nav id="mainNav">
+        <div class="container nav-container">
+            <a href="#intro" class="nav-link active" data-section="intro"><i class="fas fa-home" aria-hidden="true"></i> Introdução</a>
+            <a href="#modulo1" class="nav-link" data-section="modulo1"><i class="fas fa-book" aria-hidden="true"></i> Fundamentos</a>
+            <a href="#modulo2" class="nav-link" data-section="modulo2"><i class="fas fa-warehouse" aria-hidden="true"></i> Operações</a>
+            <a href="#modulo3" class="nav-link" data-section="modulo3"><i class="fas fa-truck" aria-hidden="true"></i> Abastecimento</a>
+            <a href="#modulo4" class="nav-link" data-section="modulo4"><i class="fas fa-clipboard-check" aria-hidden="true"></i> Controle</a>
+            <a href="#modulo5" class="nav-link" data-section="modulo5"><i class="fas fa-chart-line" aria-hidden="true"></i> Melhoria</a>
+            <a href="#moduloextra" class="nav-link" data-section="moduloextra"><i class="fas fa-user-tie" aria-hidden="true"></i> Carreira</a>
+            <a href="#organograma" class="nav-link" data-section="organograma"><i class="fas fa-sitemap" aria-hidden="true"></i> Organograma</a>
+            <a href="#comparativo" class="nav-link" data-section="comparativo"><i class="fas fa-balance-scale" aria-hidden="true"></i> Estoquista vs Almoxarife</a>
+        </div>
+    </nav>
+
+    <!-- Introdução -->
+    <section class="intro" id="intro">
+        <div class="container fade-in">
+            <h1>Treinamento Profissional: Estoque e Logística</h1>
+            <p>Capacitação para executar com excelência todas as operações logísticas com visão estratégica, disciplina e performance.</p>
+            <a href="#modulo1" class="cta-button">Começar Treinamento <i class="fas fa-arrow-down" aria-hidden="true"></i></a>
+        </div>
+    </section>
+
+    <!-- Conteúdo Principal -->
+    <div class="container">
+        <!-- Módulo 1 -->
+        <section class="section" id="modulo1">
+            <div class="module">
+                <h2 class="module-title"><i class="fas fa-book-open" aria-hidden="true"></i> Módulo 1: Fundamentos de Logística</h2>
+                <div class="module-content">
+                    <div class="accordion">
+                        <div class="accordion-item fade-in">
+                            <div class="accordion-header">
+                                <span>Conceitos Básicos</span>
+                                <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <p>A logística é a área responsável pelo planejamento, implementação e controle do fluxo eficiente de produtos, serviços e informações, desde o ponto de origem até o ponto de consumo. Em termos simples, é a arte de colocar o produto certo, no lugar certo, no momento certo, nas condições adequadas e pelo menor custo possível.</p>
+                                
+                                <h4>Conceitos fundamentais:</h4>
+                                <ul>
+                                    <li><strong>Logística</strong>: Processo de gerenciar estrategicamente a aquisição, movimentação e armazenagem de materiais e produtos acabados.</li>
+                                    <li><strong>Fluxo logístico</strong>: Caminho percorrido pelos materiais desde o fornecedor até o cliente final.</li>
+                                    <li><strong>Lead time</strong>: Tempo decorrido entre o pedido e a entrega de um produto.</li>
+                                    <li><strong>Nível de serviço</strong>: Capacidade de atender às expectativas dos clientes em termos de disponibilidade, prazo e qualidade.</li>
+                                </ul>
+
+                                <div class="example-box">
+                                    <h4><i class="fas fa-lightbulb" aria-hidden="true"></i> Exemplo prático:</h4>
+                                    <p>Uma loja de roupas precisa garantir que as peças da nova coleção estejam disponíveis nas prateleiras antes do início da estação. A logística envolve desde a compra dos produtos dos fornecedores, transporte até o centro de distribuição, armazenagem adequada e distribuição para as lojas no momento certo.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item fade-in delay-1">
+                            <div class="accordion-header">
+                                <span>Cadeia de Suprimentos</span>
+                                <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <p>A cadeia de suprimentos (supply chain) é uma rede integrada de organizações, recursos, atividades e processos envolvidos na criação e entrega de valor, na forma de produtos e serviços, ao consumidor final.</p>
+                                
+                                <h4>Componentes principais:</h4>
+                                <ul>
+                                    <li><strong>Fornecedores</strong>: Responsáveis pela matéria-prima e insumos.</li>
+                                    <li><strong>Fabricantes</strong>: Transformam matéria-prima em produtos.</li>
+                                    <li><strong>Distribuidores</strong>: Movimentam os produtos dos fabricantes para os varejistas.</li>
+                                    <li><strong>Varejistas</strong>: Vendem os produtos aos consumidores finais.</li>
+                                    <li><strong>Consumidores</strong>: Destino final dos produtos.</li>
+                                </ul>
+
+                                <p>A eficiência da cadeia de suprimentos depende da integração e comunicação entre todos os elos. Quanto melhor a sincronização, menores os custos e maior a satisfação do cliente.</p>
+
+                                <div class="example-box">
+                                    <h4><i class="fas fa-lightbulb" aria-hidden="true"></i> Exemplo prático:</h4>
+                                    <p>Na cadeia de suprimentos de uma loja de calçados, temos os fornecedores de couro e outros materiais, as fábricas que produzem os calçados, os centros de distribuição que recebem os produtos, as lojas que vendem ao consumidor e o serviço pós-venda que atende reclamações e trocas.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item fade-in delay-2">
+                            <div class="accordion-header">
+                                <span>Tipos de Logística</span>
+                                <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <h4>Logística de Entrada (Inbound)</h4>
+                                <p>Refere-se ao fluxo de materiais e informações dos fornecedores para a empresa. Envolve atividades como:</p>
+                                <ul>
+                                    <li>Planejamento de compras</li>
+                                    <li>Seleção de fornecedores</li>
+                                    <li>Recebimento de mercadorias</li>
+                                    <li>Inspeção de qualidade</li>
+                                    <li>Armazenagem inicial</li>
+                                </ul>
+
+                                <div class="example-box">
+                                    <h4><i class="fas fa-lightbulb" aria-hidden="true"></i> Exemplo prático:</h4>
+                                    <p>Um supermercado recebe diariamente caminhões de diversos fornecedores. A equipe de recebimento confere as notas fiscais, verifica a qualidade dos produtos, registra a entrada no sistema e encaminha para armazenagem ou diretamente para as gôndolas.</p>
+                                </div>
+
+                                <h4>Logística de Saída (Outbound)</h4>
+                                <p>Trata do fluxo de produtos da empresa para os clientes. Inclui:</p>
+                                <ul>
+                                    <li>Processamento de pedidos</li>
+                                    <li>Separação (picking)</li>
+                                    <li>Embalagem</li>
+                                    <li>Expedição</li>
+                                    <li>Transporte e entrega</li>
+                                </ul>
+
+                                <div class="example-box">
+                                    <h4><i class="fas fa-lightbulb" aria-hidden="true"></i> Exemplo prático:</h4>
+                                    <p>Uma loja virtual recebe pedidos online, a equipe do estoque separa os produtos solicitados, embala adequadamente, gera etiquetas de envio e despacha através de transportadoras para entrega aos clientes.</p>
+                                </div>
+
+                                <h4>Logística Reversa</h4>
+                                <p>É o processo de retorno de produtos, embalagens ou materiais ao ciclo produtivo ou de negócios. Pode ocorrer por diversos motivos:</p>
+                                <ul>
+                                    <li>Devolução de produtos com defeito</li>
+                                    <li>Retorno de embalagens reutilizáveis</li>
+                                    <li>Descarte adequado de produtos em fim de vida</li>
+                                    <li>Recall de produtos</li>
+                                </ul>
+
+                                <div class="example-box">
+                                    <h4><i class="fas fa-lightbulb" aria-hidden="true"></i> Exemplo prático:</h4>
+                                    <p>Uma empresa de eletrônicos oferece pontos de coleta para celulares antigos. Esses aparelhos retornam à fábrica, onde são desmontados para recuperação de componentes valiosos como ouro e prata, e descarte adequado de materiais tóxicos, reduzindo o impacto ambiental.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-grid fade-in delay-3">
+                        <div class="card">
+                            <div class="card-header">
+                                <i class="fas fa-sign-in-alt" aria-hidden="true"></i> Logística de Entrada
+                            </div>
+                            <div class="card-body">
+                                <p>Fluxo de materiais dos fornecedores para a empresa, incluindo recebimento, inspeção e armazenagem inicial.</p>
+                                <ul>
+                                    <li>Planejamento de compras</li>
+                                    <li>Seleção de fornecedores</li>
+                                    <li>Controle de qualidade</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <i class="fas fa-sign-out-alt" aria-hidden="true"></i> Logística de Saída
+                            </div>
+                            <div class="card-body">
+                                <p>Fluxo de produtos da empresa para os clientes, envolvendo separação, embalagem, expedição e transporte.</p>
+                                <ul>
+                                    <li>Processamento de pedidos</li>
+                                    <li>Gestão de transportes</li>
+                                    <li>Entrega ao cliente</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <i class="fas fa-recycle" aria-hidden="true"></i> Logística Reversa
+                            </div>
+                            <div class="card-body">
+                                <p>Retorno de produtos, embalagens ou materiais ao ciclo produtivo, incluindo devoluções, recalls e reciclagem.</p>
+                                <ul>
+                                    <li>Gestão de devoluções</li>
+                                    <li>Recuperação de valor</li>
+                                    <li>Descarte sustentável</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Módulo 2 -->
+        <section class="section" id="modulo2">
+            <div class="module">
+                <h2 class="module-title"><i class="fas fa-warehouse" aria-hidden="true"></i> Módulo 2: Operações de Estoque</h2>
+                <div class="module-content">
+                    <div class="accordion">
+                        <div class="accordion-item fade-in">
+                            <div class="accordion-header">
+                                <span>Recebimento e Conferência</span>
+                                <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <p>O recebimento é a porta de entrada dos produtos na empresa e representa uma etapa crítica para garantir a qualidade das operações subsequentes. Um recebimento eficiente evita problemas futuros como divergências de estoque e insatisfação de clientes.</p>
+                                
+                                <h4>Processo de recebimento:</h4>
+                                <ul>
+                                    <li><strong>Agendamento</strong>: Organização prévia das entregas para evitar congestionamentos.</li>
+                                    <li><strong>Documentação</strong>: Verificação de notas fiscais, pedidos de compra e documentos de transporte.</li>
+                                    <li><strong>Descarga</strong>: Movimentação segura dos produtos do veículo para a área de recebimento.</li>
+                                    <li><strong>Conferência</strong>: Verificação de quantidade, qualidade e especificações dos produtos.</li>
+                                    <li><strong>Registro</strong>: Entrada dos produtos no sistema de gestão.</li>
+                                </ul>
+
+                                <h4>Métodos de conferência:</h4>
+                                <ul>
+                                    <li><strong>Conferência cega</strong>: O conferente não tem acesso à quantidade esperada, contando os itens sem influência prévia.</li>
+                                    <li><strong>Conferência por amostragem</strong>: Verificação de parte dos volumes para validar o lote completo.</li>
+                                    <li><strong>Conferência total</strong>: Verificação item a item de toda a entrega.</li>
+                                </ul>
+
+                                <div class="example-box">
+                                    <h4><i class="fas fa-lightbulb" aria-hidden="true"></i> Exemplo prático:</h4>
+                                    <p>Uma loja de departamentos recebe um carregamento de 50 caixas de camisetas. O conferente verifica se a nota fiscal corresponde ao pedido, se todas as 50 caixas foram entregues, se o modelo e tamanho das camisetas estão corretos e se não há avarias nas peças. Após a conferência, registra a entrada no sistema para atualização do estoque.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item fade-in delay-1">
+                            <div class="accordion-header">
+                                <span>Armazenagem e Endereçamento</span>
+                                <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <p>A armazenagem adequada garante a preservação dos produtos, otimiza o espaço disponível e facilita a localização dos itens quando necessário.</p>
+                                
+                                <h4>Tipos de armazenagem:</h4>
+                                <ul>
+                                    <li><strong>Blocado</strong>: Produtos empilhados diretamente sobre o piso ou paletes.</li>
+                                    <li><strong>Porta-paletes</strong>: Estruturas metálicas para armazenagem de paletes.</li>
+                                    <li><strong>Flow-rack</strong>: Sistema dinâmico onde os produtos são inseridos por um lado e retirados pelo outro.</li>
+                                    <li><strong>Cantilever</strong>: Estruturas com braços para produtos longos como tubos e perfis.</li>
+                                    <li><strong>Mezanino</strong>: Estrutura que cria um segundo nível de armazenagem.</li>
+                                </ul>
+
+                                <h4>Sistemas de endereçamento:</h4>
+                                <ul>
+                                    <li><strong>Fixo</strong>: Cada produto tem uma localização específica e permanente.</li>
+                                    <li><strong>Caótico</strong>: Os produtos são armazenados em qualquer localização disponível.</li>
+                                    <li><strong>Misto</strong>: Combina características dos sistemas fixo e caótico.</li>
+                                </ul>
+
+                                <h4>Estrutura de endereçamento:</h4>
+                                <ul>
+                                    <li><strong>Rua/Corredor</strong>: Identificação do corredor onde o produto está localizado.</li>
+                                    <li><strong>Módulo/Prateleira</strong>: Posição específica dentro do corredor.</li>
+                                    <li><strong>Nível/Altura</strong>: Altura da prateleira onde o produto está armazenado.</li>
+                                    <li><strong>Posição</strong>: Localização específica dentro da prateleira.</li>
+                                </ul>
+
+                                <div class="example-box">
+                                    <h4><i class="fas fa-lightbulb" aria-hidden="true"></i> Exemplo prático:</h4>
+                                    <p>Em um centro de distribuição, o endereço "A-03-02-05" significa: Corredor A, Módulo 3, Nível 2, Posição 5. Este sistema permite que qualquer colaborador localize rapidamente um produto específico, mesmo em um armazém com milhares de itens.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item fade-in delay-2">
+                            <div class="accordion-header">
+                                <span>Separação e Expedição</span>
+                                <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <p>A separação (picking) e a expedição são as etapas finais do processo de atendimento a pedidos, garantindo que os produtos corretos sejam enviados aos clientes no prazo estabelecido.</p>
+                                
+                                <h4>Métodos de separação:</h4>
+                                <ul>
+                                    <li><strong>Picking discreto</strong>: Um separador atende um pedido por vez do início ao fim.</li>
+                                    <li><strong>Picking por lote</strong>: Um separador atende vários pedidos simultaneamente.</li>
+                                    <li><strong>Picking por zona</strong>: Cada separador é responsável por uma área específica do armazém.</li>
+                                    <li><strong>Picking por onda</strong>: Os pedidos são agrupados por características comuns (região, transportadora, etc.).</li>
+                                </ul>
+
+                                <h4>Tecnologias de apoio:</h4>
+                                <ul>
+                                    <li><strong>Coletores de dados</strong>: Dispositivos móveis que auxiliam na separação e conferência.</li>
+                                    <li><strong>Pick-to-light</strong>: Sistema de luzes que indica as posições a serem separadas.</li>
+                                    <li><strong>Voice picking</strong>: Sistema de comando por voz que orienta o separador.</li>
+                                    <li><strong>Esteiras transportadoras</strong>: Facilitam a movimentação dos produtos separados.</li>
+                                </ul>
+
+                                <h4>Processo de expedição:</h4>
+                                <ul>
+                                    <li><strong>Conferência final</strong>: Verificação dos itens separados contra o pedido.</li>
+                                    <li><strong>Embalagem</strong>: Acondicionamento adequado para proteger os produtos durante o transporte.</li>
+                                    <li><strong>Etiquetagem</strong>: Identificação das embalagens com informações de destino.</li>
+                                    <li><strong>Carregamento</strong>: Organização dos volumes nos veículos de transporte.</li>
+                                    <li><strong>Documentação</strong>: Emissão de notas fiscais, conhecimentos de transporte e outros documentos necessários.</li>
+                                </ul>
+
+                                <div class="example-box">
+                                    <h4><i class="fas fa-lightbulb" aria-hidden="true"></i> Exemplo prático:</h4>
+                                    <p>Uma loja online recebe 100 pedidos por dia. Os separadores utilizam coletores de dados que indicam a localização de cada produto. Após a separação, os itens são conferidos, embalados e etiquetados. A equipe de expedição organiza os volumes por transportadora e região, emite as notas fiscais e carrega os veículos. Todo o processo é registrado no sistema para rastreamento dos pedidos.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-grid fade-in delay-3">
+                        <div class="card">
+                            <div class="card-header">
+                                <i class="fas fa-clipboard-check" aria-hidden="true"></i> Recebimento
+                            </div>
+                            <div class="card-body">
+                                <p>Processo crítico que garante a qualidade das mercadorias que entram no estoque.</p>
+                                <ul>
+                                    <li>Conferência de documentos</li>
+                                    <li>Verificação de quantidade</li>
+                                    <li>Controle de qualidade</li>
+                                    <li>Registro no sistema</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <i class="fas fa-boxes" aria-hidden="true"></i> Armazenagem
+                            </div>
+                            <div class="card-body">
+                                <p>Organização eficiente dos produtos para preservação e fácil localização.</p>
+                                <ul>
+                                    <li>Sistemas de endereçamento</li>
+                                    <li>Tipos de armazenagem</li>
+                                    <li>Controle de temperatura</li>
+                                    <li>Gestão de espaço</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <i class="fas fa-truck-loading" aria-hidden="true"></i> Separação e Expedição
+                            </div>
+                            <div class="card-body">
+                                <p>Processos finais que garantem a entrega correta e no prazo ao cliente.</p>
+                                <ul>
+                                    <li>Métodos de picking</li>
+                                    <li>Tecnologias de apoio</li>
+                                    <li>Embalagem adequada</li>
+                                    <li>Documentação</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Módulo 3 -->
+        <section class="section" id="modulo3">
+            <div class="module">
+                <h2 class="module-title"><i class="fas fa-truck" aria-hidden="true"></i> Módulo 3: Abastecimento e Integração com Vendas</h2>
+                <div class="module-content">
+                    <div class="accordion">
+                        <div class="accordion-item fade-in">
+                            <div class="accordion-header">
+                                <span>Fluxo de Reposição</span>
+                                <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <p>O fluxo de reposição é o processo que garante a disponibilidade contínua dos produtos nas áreas de venda ou produção. Um fluxo de reposição eficiente evita rupturas (falta de produtos) e mantém o nível de serviço adequado.</p>
+                                
+                                <h4>Tipos de reposição:</h4>
+                                <ul>
+                                    <li><strong>Reposição reativa</strong>: Ocorre quando o estoque atinge um nível mínimo predeterminado.</li>
+                                    <li><strong>Reposição preventiva</strong>: Programada com base em previsões de demanda.</li>
+                                    <li><strong>Reposição contínua</strong>: Realizada em intervalos regulares, independentemente do nível de estoque.</li>
+                                    <li><strong>Reposição just-in-time</strong>: Produtos são repostos apenas quando necessário, minimizando estoques.</li>
+                                </ul>
+
+                                <h4>Parâmetros de reposição:</h4>
+                                <ul>
+                                    <li><strong>Estoque mínimo</strong>: Quantidade que indica necessidade de reposição.</li>
+                                    <li><strong>Estoque máximo</strong>: Limite superior para evitar excesso de produtos.</li>
+                                    <li><strong>Ponto de pedido</strong>: Nível de estoque que dispara um novo pedido.</li>
+                                    <li><strong>Lote econômico de compra</strong>: Quantidade ideal para minimizar custos de aquisição e armazenagem.</li>
+                                </ul>
+
+                                <div class="example-box">
+                                    <h4><i class="fas fa-lightbulb" aria-hidden="true"></i> Exemplo prático:</h4>
+                                    <p>Uma loja de calçados define que o estoque mínimo para um modelo popular é de 5 pares por tamanho. Quando o sistema identifica que restam apenas 6 pares do tamanho 38, emite automaticamente um alerta para o setor de compras iniciar o processo de reposição, considerando o tempo médio de entrega do fornecedor (lead time).</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item fade-in delay-1">
+                            <div class="accordion-header">
+                                <span>Comunicação entre Estoque e Salão de Vendas</span>
+                                <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <p>A integração eficiente entre o estoque e a área de vendas é fundamental para garantir a satisfação do cliente e maximizar as oportunidades de negócio.</p>
+                                
+                                <h4>Canais de comunicação:</h4>
+                                <ul>
+                                    <li><strong>Sistemas integrados</strong>: Software que conecta estoque e vendas em tempo real.</li>
+                                    <li><strong>Comunicadores internos</strong>: Rádios, aplicativos de mensagens ou intercomunicadores.</li>
+                                    <li><strong>Reuniões periódicas</strong>: Encontros regulares entre as equipes para alinhamento.</li>
+                                    <li><strong>Quadros de gestão visual</strong>: Painéis que exibem informações relevantes para ambas as equipes.</li>
+                                </ul>
+
+                                <h4>Informações compartilhadas:</h4>
+                                <ul>
+                                    <li><strong>Disponibilidade de produtos</strong>: Quais itens estão disponíveis para venda.</li>
+                                    <li><strong>Previsão de chegada</strong>: Quando novos produtos estarão disponíveis.</li>
+                                    <li><strong>Produtos em promoção</strong>: Itens com descontos ou ações especiais.</li>
+                                    <li><strong>Tendências de venda</strong>: Produtos com maior saída ou procura.</li>
+                                </ul>
+
+                                <div class="example-box">
+                                    <h4><i class="fas fa-lightbulb" aria-hidden="true"></i> Exemplo prático:</h4>
+                                    <p>Durante o lançamento de uma coleção especial, a equipe de vendas informa ao estoque quais produtos estão tendo maior procura. O estoque prioriza a reposição desses itens e comunica à equipe de vendas quando novos lotes estarão disponíveis, permitindo que os vendedores informem aos clientes interessados.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item fade-in delay-2">
+                            <div class="accordion-header">
+                                <span>Ruptura e Giro de Produto</span>
+                                <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <p>A gestão adequada do giro de produtos e o controle de rupturas são essenciais para a saúde financeira e operacional do negócio.</p>
+                                
+                                <h4>Ruptura (stockout):</h4>
+                                <ul>
+                                    <li><strong>Definição</strong>: Situação em que um produto está indisponível quando solicitado pelo cliente.</li>
+                                    <li><strong>Causas comuns</strong>: Falhas na previsão de demanda, problemas com fornecedores, erros de inventário, falhas na comunicação.</li>
+                                    <li><strong>Impactos</strong>: Perda de vendas, insatisfação do cliente, danos à imagem da empresa.</li>
+                                    <li><strong>Indicadores</strong>: Taxa de ruptura (percentual de itens indisponíveis em relação ao total do catálogo).</li>
+                                </ul>
+
+                                <h4>Giro de estoque:</h4>
+                                <ul>
+                                    <li><strong>Definição</strong>: Frequência com que o estoque é renovado em um período específico.</li>
+                                    <li><strong>Cálculo</strong>: Custo das mercadorias vendidas ÷ Estoque médio.</li>
+                                    <li><strong>Interpretação</strong>: Quanto maior o giro, melhor a eficiência na gestão do estoque.</li>
+                                    <li><strong>Estratégias para aumentar o giro</strong>: Previsão de demanda mais precisa, redução do lote de compra, promoções para itens de baixo giro.</li>
+                                </ul>
+
+                                <h4>Classificação ABC:</h4>
+                                <ul>
+                                    <li><strong>Classe A</strong>: Itens de alto valor e baixo volume (80% do valor, 20% dos itens).</li>
+                                    <li><strong>Classe B</strong>: Itens de valor e volume intermediários.</li>
+                                    <li><strong>Classe C</strong>: Itens de baixo valor e alto volume (10% do valor, 50% dos itens).</li>
+                                </ul>
+
+                                <div class="example-box">
+                                    <h4><i class="fas fa-lightbulb" aria-hidden="true"></i> Exemplo prático:</h4>
+                                    <p>Uma loja de eletrônicos identifica que smartphones premium (classe A) têm alto valor e baixo volume, enquanto acessórios como capas e películas (classe C) têm baixo valor e alto volume. A equipe de estoque implementa estratégias diferentes para cada categoria: para os smartphones, mantém estoque reduzido com reposição rápida; para os acessórios, trabalha com volumes maiores e reposição menos frequente. Esta abordagem otimiza o capital investido em estoque e reduz as chances de ruptura.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Módulo 4 -->
+        <section class="section" id="modulo4">
+            <div class="module">
+                <h2 class="module-title"><i class="fas fa-clipboard-check" aria-hidden="true"></i> Módulo 4: Controle e Inventário</h2>
+                <div class="module-content">
+                    <div class="accordion">
+                        <div class="accordion-item fade-in">
+                            <div class="accordion-header">
+                                <span>Tipos de Inventário</span>
+                                <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <p>O inventário é o processo de contagem física dos itens em estoque para verificar se as quantidades reais correspondem aos registros do sistema. É uma prática fundamental para garantir a acuracidade do estoque e a confiabilidade das informações.</p>
+                                
+                                <h4>Inventário Geral:</h4>
+                                <ul>
+                                    <li><strong>Definição</strong>: Contagem de todos os itens do estoque em um único momento.</li>
+                                    <li><strong>Características</strong>: Geralmente requer a paralisação das operações, é realizado em períodos específicos (anual, semestral).</li>
+                                    <li><strong>Vantagens</strong>: Visão completa do estoque, ajuste total das divergências.</li>
+                                    <li><strong>Desvantagens</strong>: Interrupção das atividades, grande mobilização de recursos.</li>
+                                </ul>
+
+                                <h4>Inventário Rotativo:</h4>
+                                <ul>
+                                    <li><strong>Definição</strong>: Contagem contínua e programada de partes do estoque ao longo do tempo.</li>
+                                    <li><strong>Características</strong>: Não interrompe as operações, segue um cronograma predefinido.</li>
+                                    <li><strong>Vantagens</strong>: Identificação rápida de problemas, menor impacto nas operações diárias.</li>
+                                    <li><strong>Desvantagens</strong>: Requer disciplina e organização constantes.</li>
+                                </ul>
+
+                                <h4>Inventário Cíclico:</h4>
+                                <ul>
+                                    <li><strong>Definição</strong>: Variação do inventário rotativo baseado na classificação ABC dos produtos.</li>
+                                    <li><strong>Características</strong>: Itens A são contados com maior frequência (ex: mensal), itens B com frequência intermediária (ex: trimestral) e itens C com menor frequência (ex: semestral).</li>
+                                    <li><strong>Vantagens</strong>: Foco nos itens de maior valor, otimização de recursos.</li>
+                                    <li><strong>Desvantagens</strong>: Itens de menor valor podem acumular divergências por mais tempo.</li>
+                                </ul>
+
+                                <div class="example-box">
+                                    <h4><i class="fas fa-lightbulb" aria-hidden="true"></i> Exemplo prático:</h4>
+                                    <p>Uma loja de materiais de construção implementa um sistema de inventário cíclico. Os produtos classe A (como ferramentas elétricas) são contados mensalmente, os produtos classe B (como fechaduras e dobradiças) são contados trimestralmente, e os produtos classe C (como parafusos e pregos) são contados semestralmente. Isso permite que a equipe mantenha o controle dos itens mais valiosos sem interromper as operações da loja.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item fade-in delay-1">
+                            <div class="accordion-header">
+                                <span>Métodos de Contagem e Acuracidade</span>
+                                <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <p>A precisão na contagem é essencial para garantir a confiabilidade do inventário e a acuracidade do estoque.</p>
+                                
+                                <h4>Métodos de contagem:</h4>
+                                <ul>
+                                    <li><strong>Contagem única</strong>: Um único contador verifica cada item.</li>
+                                    <li><strong>Contagem dupla</strong>: Dois contadores verificam o mesmo item independentemente.</li>
+                                    <li><strong>Contagem cega</strong>: O contador não tem acesso à quantidade esperada no sistema.</li>
+                                    <li><strong>Contagem por amostragem</strong>: Verificação de uma parte representativa do estoque.</li>
+                                </ul>
+
+                                <h4>Tecnologias de apoio:</h4>
+                                <ul>
+                                    <li><strong>Coletores de dados</strong>: Dispositivos portáteis que facilitam o registro das contagens.</li>
+                                    <li><strong>Leitores de código de barras/QR Code</strong>: Agilizam a identificação dos produtos.</li>
+                                    <li><strong>RFID (Identificação por Radiofrequência)</strong>: Permite contagem automática de múltiplos itens.</li>
+                                    <li><strong>Drones</strong>: Em grandes armazéns, podem realizar contagens em locais de difícil acesso.</li>
+                                </ul>
+
+                                <h4>Acuracidade de estoque:</h4>
+                                <ul>
+                                    <li><strong>Definição</strong>: Percentual de itens cujas quantidades físicas correspondem aos registros do sistema.</li>
+                                    <li><strong>Cálculo</strong>: (Número de itens corretos ÷ Total de itens contados) × 100.</li>
+                                    <li><strong>Meta recomendada</strong>: Acima de 95% para operações eficientes.</li>
+                                    <li><strong>Impacto</strong>: Afeta diretamente o nível de serviço, a confiabilidade das informações e a tomada de decisão.</li>
+                                </ul>
+
+                                <div class="example-box">
+                                    <h4><i class="fas fa-lightbulb" aria-hidden="true"></i> Exemplo prático:</h4>
+                                    <p>Uma farmácia realiza um inventário rotativo semanal, contando 100 itens por semana. Na última contagem, 97 itens apresentaram quantidades físicas idênticas aos registros do sistema, resultando em uma acuracidade de 97%. Os 3 itens divergentes são investigados para identificar as causas das diferenças (erros de recebimento, vendas não registradas, furtos, etc.) e medidas corretivas são implementadas para evitar novas ocorrências.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item fade-in delay-2">
+                            <div class="accordion-header">
+                                <span>Indicadores de Desempenho</span>
+                                <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <p>Os indicadores de desempenho (KPIs - Key Performance Indicators) são métricas que permitem avaliar a eficiência e eficácia das operações logísticas, identificar oportunidades de melhoria e tomar decisões baseadas em dados.</p>
+                                
+                                <h4>Principais indicadores de estoque:</h4>
+                                <ul>
+                                    <li><strong>Acuracidade de estoque</strong>: Percentual de itens com quantidades corretas.</li>
+                                    <li><strong>Giro de estoque</strong>: Frequência com que o estoque é renovado em um período.</li>
+                                    <li><strong>Cobertura de estoque</strong>: Tempo que o estoque atual consegue atender à demanda sem reposição.</li>
+                                    <li><strong>Taxa de ruptura</strong>: Percentual de itens indisponíveis quando solicitados.</li>
+                                    <li><strong>Obsolescência</strong>: Percentual de itens sem movimentação por longos períodos.</li>
+                                    <li><strong>Custo de armazenagem</strong>: Valor gasto para manter os produtos estocados.</li>
+                                </ul>
+
+                                <h4>Indicadores de produtividade:</h4>
+                                <ul>
+                                    <li><strong>Tempo médio de recebimento</strong>: Tempo para processar uma entrega.</li>
+                                    <li><strong>Produtividade de separação</strong>: Quantidade de itens separados por hora/pessoa.</li>
+                                    <li><strong>Tempo de ciclo do pedido</strong>: Tempo total desde o recebimento até a expedição de um pedido.</li>
+                                    <li><strong>Taxa de erros</strong>: Percentual de pedidos com divergências.</li>
+                                </ul>
+
+                                <h4>Gestão de indicadores:</h4>
+                                <ul>
+                                    <li><strong>Definição de metas</strong>: Estabelecimento de objetivos claros e alcançáveis.</li>
+                                    <li><strong>Monitoramento constante</strong>: Acompanhamento regular dos resultados.</li>
+                                    <li><strong>Análise de tendências</strong>: Identificação de padrões e comportamentos ao longo do tempo.</li>
+                                    <li><strong>Planos de ação</strong>: Implementação de medidas corretivas quando necessário.</li>
+                                </ul>
+
+                                <div class="example-box">
+                                    <h4><i class="fas fa-lightbulb" aria-hidden="true"></i> Exemplo prático:</h4>
+                                    <p>Um centro de distribuição monitora mensalmente seus principais KPIs. No último mês, identificou que a produtividade de separação caiu de 120 para 100 itens por hora/pessoa. Ao analisar as causas, descobriu que o layout de armazenagem foi alterado, aumentando as distâncias percorridas pelos separadores. Com base nessa informação, a equipe reorganizou o layout, posicionando os itens de maior giro mais próximos da área de expedição, o que resultou em um aumento da produtividade para 130 itens por hora/pessoa no mês seguinte.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Módulo 5 -->
+        <section class="section" id="modulo5">
+            <div class="module">
+                <h2 class="module-title"><i class="fas fa-chart-line" aria-hidden="true"></i> Módulo 5: Melhoria Contínua e Liderança</h2>
+                <div class="module-content">
+                    <div class="accordion">
+                        <div class="accordion-item fade-in">
+                            <div class="accordion-header">
+                                <span>Kaizen e 5S no Estoque</span>
+                                <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <p>A filosofia de melhoria contínua (Kaizen) e a metodologia 5S são ferramentas poderosas para aumentar a eficiência, reduzir desperdícios e criar um ambiente de trabalho mais organizado e produtivo no estoque.</p>
+                                
+                                <h4>Kaizen:</h4>
+                                <p>Kaizen é uma palavra japonesa que significa "mudança para melhor" ou "melhoria contínua". É uma filosofia que busca melhorias constantes, mesmo que pequenas, em todos os aspectos do trabalho.</p>
+                                
+                                <ul>
+                                    <li><strong>Princípios do Kaizen</strong>: Questionar continuamente os processos atuais, envolver todos os colaboradores, eliminar desperdícios, simplificar tarefas, padronizar processos.</li>
+                                    <li><strong>Ciclo PDCA</strong>: Plan (Planejar), Do (Executar), Check (Verificar), Act (Agir) - metodologia para implementação de melhorias.</li>
+                                    <li><strong>Benefícios</strong>: Redução de custos, aumento da produtividade, maior qualidade, ambiente de trabalho mais seguro e agradável.</li>
+                                </ul>
+                                
+                                <h4>Metodologia 5S:</h4>
+                                <p>O 5S é um sistema de organização do ambiente de trabalho originário do Japão, composto por cinco etapas cujos nomes em japonês começam com a letra "S".</p>
+                                
+                                <ul>
+                                    <li><strong>Seiri (Utilização/Descarte)</strong>: Separar o necessário do desnecessário, eliminando o que não é útil.</li>
+                                    <li><strong>Seiton (Organização)</strong>: Organizar os itens necessários de forma que sejam facilmente localizados e utilizados.</li>
+                                    <li><strong>Seiso (Limpeza)</strong>: Manter o ambiente limpe, identificando e eliminando fontes de sujeira.</li>
+                                    <li><strong>Seiketsu (Padronização)</strong>: Criar padrões visuais e procedimentos para manter os três primeiros S's.</li>
+                                    <li><strong>Shitsuke (Disciplina)</strong>: Manter a disciplina para seguir os procedimentos estabelecidos e buscar melhorias contínuas.</li>
+                                </ul>
+                                
+                                <div class="example-box">
+                                    <h4><i class="fas fa-lightbulb" aria-hidden="true"></i> Exemplo prático:</h4>
+                                    <p>Um centro de distribuição implementou o 5S na área de separação de pedidos. Primeiro, removeram equipamentos quebrados e materiais obsoletos (Seiri). Em seguida, organizaram as ferramentas e materiais de uso frequente em locais de fácil acesso, com demarcações visuais (Seiton). Estabeleceram rotinas de limpeza diária (Seiso) e criaram procedimentos padronizados com fotos do "antes e depois" para manter o padrão (Seiketsu). Por fim, implementaram auditorias semanais e reconhecimento das melhores práticas para manter a disciplina (Shitsuke). Como resultado, o tempo de separação de pedidos foi reduzido em 20% e os erros diminuíram em 35%.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item fade-in delay-1">
+                            <div class="accordion-header">
+                                <span>Postura Profissional e Trabalho em Equipe</span>
+                                <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <p>A postura profissional adequada e a capacidade de trabalhar em equipe são competências essenciais para o sucesso na área de estoque e logística, onde a colaboração e a confiabilidade são fundamentais.</p>
+                                
+                                <h4>Postura profissional:</h4>
+                                <ul>
+                                    <li><strong>Pontualidade e assiduidade</strong>: Cumprir horários e compromissos, sendo confiável para a equipe.</li>
+                                    <li><strong>Apresentação pessoal</strong>: Manter aparência adequada, utilizando uniformes e EPIs corretamente.</li>
+                                    <li><strong>Responsabilidade</strong>: Assumir as consequências de suas ações e decisões.</li>
+                                    <li><strong>Proatividade</strong>: Antecipar-se aos problemas e buscar soluções sem esperar ordens.</li>
+                                    <li><strong>Ética</strong>: Agir com honestidade, integridade e respeito em todas as situações.</li>
+                                </ul>
+                                
+                                <h4>Trabalho em equipe:</h4>
+                                <ul>
+                                    <li><strong>Colaboração</strong>: Contribuir ativamente para o sucesso coletivo, ajudando colegas quando necessário.</li>
+                                    <li><strong>Comunicação eficaz</strong>: Transmitir informações de forma clara e objetiva, evitando mal-entendidos.</li>
+                                    <li><strong>Resolução de conflitos</strong>: Lidar com divergências de forma construtiva, buscando soluções em vez de culpados.</li>
+                                    <li><strong>Flexibilidade</strong>: Adaptar-se a mudanças e estar disposto a assumir diferentes funções quando necessário.</li>
+                                    <li><strong>Reconhecimento</strong>: Valorizar as contribuições dos colegas e celebrar conquistas conjuntas.</li>
+                                </ul>
+                                
+                                <div class="example-box">
+                                    <h4><i class="fas fa-lightbulb" aria-hidden="true"></i> Exemplo prático:</h4>
+                                    <p>Durante o período de Black Friday, uma equipe de estoque precisou lidar com um volume de pedidos três vezes maior que o normal. O supervisor dividiu a equipe em grupos especializados (recebimento, separação, embalagem e expedição) e estabeleceu metas claras para cada turno. Quando o grupo de separação começou a ficar sobrecarregado, membros de outras áreas que já haviam concluído suas tarefas se ofereceram para ajudar. A comunicação constante entre os grupos permitiu identificar gargalos rapidamente e realocar recursos. Graças à postura profissional de cada membro e ao espírito de equipe, todos os pedidos foram processados dentro do prazo, mantendo a qualidade do serviço mesmo sob pressão.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item fade-in delay-2">
+                            <div class="accordion-header">
+                                <span>Feedback e Comunicação</span>
+                                <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <p>O feedback construtivo e a comunicação eficaz são ferramentas essenciais para o desenvolvimento profissional e o bom funcionamento das operações logísticas.</p>
+                                
+                                <h4>Feedback:</h4>
+                                <ul>
+                                    <li><strong>Definição</strong>: Processo de fornecer informações sobre o desempenho, comportamento ou resultados de uma pessoa ou equipe.</li>
+                                    <li><strong>Tipos</strong>: Positivo (reconhecimento), construtivo (oportunidades de melhoria), corretivo (correção de desvios).</li>
+                                    <li><strong>Características do feedback eficaz</strong>: Específico, oportuno, equilibrado, baseado em fatos, focado no comportamento (não na pessoa), orientado para o desenvolvimento.</li>
+                                    <li><strong>Como receber feedback</strong>: Ouvir atentamente, não se defender imediatamente, fazer perguntas para esclarecer, agradecer, refletir e agir.</li>
+                                </ul>
+                                
+                                <h4>Comunicação eficaz:</h4>
+                                <ul>
+                                    <li><strong>Comunicação verbal</strong>: Clareza, objetividade, tom de voz adequado, escolha das palavras.</li>
+                                    <li><strong>Comunicação não verbal</strong>: Linguagem corporal, expressões faciais, contato visual, postura.</li>
+                                    <li><strong>Comunicação escrita</strong>: Mensagens claras, concisas e sem ambiguidades em e-mails, relatórios e documentos.</li>
+                                    <li><strong>Escuta ativa</strong>: Prestar total atenção ao interlocutor, demonstrar interesse, fazer perguntas pertinentes.</li>
+                                    <li><strong>Barreiras de comunicação</strong>: Ruídos, interpretações equivocadas, preconceitos, falta de atenção, linguagem técnica excessiva.</li>
+                                </ul>
+                                
+                                <h4>Comunicação em operações logísticas:</h4>
+                                <ul>
+                                    <li><strong>Briefings diários</strong>: Reuniões rápidas no início do turno para alinhar prioridades e informações importantes.</li>
+                                    <li><strong>Gestão visual</strong>: Uso de quadros, sinalizações e códigos de cores para comunicar informações de forma rápida e intuitiva.</li>
+                                    <li><strong>Documentação</strong>: Registros precisos de ocorrências, procedimentos e decisões para garantir a continuidade das operações.</li>
+                                    <li><strong>Comunicação entre turnos</strong>: Transmissão eficaz de informações entre equipes que se revezam.</li>
+                                </ul>
+                                
+                                <div class="example-box">
+                                    <h4><i class="fas fa-lightbulb" aria-hidden="true"></i> Exemplo prático:</h4>
+                                    <p>Um supervisor de estoque percebeu que um colaborador estava cometendo erros frequentes na separação de pedidos. Em vez de criticá-lo publicamente, agendou uma conversa privada. Durante o feedback, começou reconhecendo os pontos fortes do colaborador (rapidez e dedicação), depois apresentou dados específicos sobre os erros ocorridos e perguntou se havia alguma dificuldade. O colaborador revelou que estava com problemas de visão e não conseguia ler bem as etiquetas menores. Como resultado desse diálogo aberto, a empresa providenciou etiquetas com fonte maior e encaminhou o colaborador para um exame oftalmológico. Nos meses seguintes, a taxa de erros caiu significativamente, e o colaborador se sentiu valorizado por ter sido ouvido e apoiado.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Módulo Extra -->
+        <section class="section" id="moduloextra">
+            <div class="module">
+                <h2 class="module-title"><i class="fas fa-user-tie" aria-hidden="true"></i> Módulo Extra: Carreira na Logística</h2>
+                <div class="module-content">
+                    <div class="accordion">
+                        <div class="accordion-item fade-in">
+                            <div class="accordion-header">
+                                <span>Possibilidades de Crescimento</span>
+                                <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <p>A área de logística oferece diversas oportunidades de crescimento profissional, tanto vertical (subindo na hierarquia) quanto horizontal (especializando-se em diferentes áreas).</p>
+                                
+                                <h4>Crescimento vertical:</h4>
+                                <p>A evolução hierárquica na área de logística geralmente segue um caminho como este:</p>
+                                <ol>
+                                    <li><strong>Auxiliar/Estagiário</strong>: Posição inicial, aprendendo as operações básicas.</li>
+                                    <li><strong>Estoquista/Operador Logístico</strong>: Execução das atividades operacionais.</li>
+                                    <li><strong>Líder de Equipe</strong>: Coordenação de pequenos grupos e processos específicos.</li>
+                                    <li><strong>Supervisor</strong>: Gestão de múltiplas equipes ou áreas.</li>
+                                    <li><strong>Coordenador</strong>: Integração entre diferentes operações logísticas.</li>
+                                    <li><strong>Gerente</strong>: Responsabilidade estratégica pela operação completa.</li>
+                                    <li><strong>Diretor</strong>: Definição de diretrizes e estratégias para toda a área.</li>
+                                </ol>
+                                
+                                <h4>Crescimento horizontal:</h4>
+                                <p>Além da ascensão hierárquica, é possível especializar-se em diferentes áreas da logística:</p>
+                                <ul>
+                                    <li><strong>Gestão de Estoques</strong>: Foco em controle de inventário, previsão de demanda e políticas de estoque.</li>
+                                    <li><strong>Transportes</strong>: Especialização em roteirização, gestão de frota e modais de transporte.</li>
+                                    <li><strong>Comércio Exterior</strong>: Atuação em importação, exportação e operações aduaneiras.</li>
+                                    <li><strong>Supply Chain</strong>: Visão integrada de toda a cadeia de suprimentos.</li>
+                                    <li><strong>Logística Reversa</strong>: Especialização em fluxos de retorno de produtos e materiais.</li>
+                                    <li><strong>Tecnologia Logística</strong>: Foco em sistemas WMS, TMS, automação e IoT aplicados à logística.</li>
+                                </ul>
+                                
+                                <div class="example-box">
+                                    <h4><i class="fas fa-lightbulb" aria-hidden="true"></i> Exemplo prático:</h4>
+                                    <p>João começou como auxiliar de estoque em um centro de distribuição. Após dois anos, foi promovido a estoquista sênior devido ao seu bom desempenho. Percebendo seu interesse por tecnologia, a empresa o convidou para participar da implementação de um novo sistema WMS (Warehouse Management System). Esta experiência o levou a se especializar em tecnologia logística, tornando-se analista de sistemas logísticos. Atualmente, ele coordena projetos de automação em diferentes unidades da empresa, combinando seu conhecimento operacional com habilidades técnicas.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item fade-in delay-1">
+                            <div class="accordion-header">
+                                <span>Competências Valorizadas</span>
+                                <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <p>O mercado de trabalho em logística valoriza profissionais que combinam conhecimentos técnicos com habilidades comportamentais (soft skills).</p>
+                                
+                                <h4>Conhecimentos técnicos:</h4>
+                                <ul>
+                                    <li><strong>Gestão de estoques</strong>: Políticas de estoque, classificação ABC, inventário, acuracidade.</li>
+                                    <li><strong>Processos logísticos</strong>: Recebimento, armazenagem, separação, expedição, transportes.</li>
+                                    <li><strong>Sistemas de gestão</strong>: WMS, ERP, TMS e outras ferramentas tecnológicas.</li>
+                                    <li><strong>Indicadores (KPIs)</strong>: Compreensão e análise de métricas de desempenho logístico.</li>
+                                    <li><strong>Metodologias de melhoria</strong>: Lean, Six Sigma, Kaizen, 5S.</li>
+                                    <li><strong>Conhecimentos específicos</strong>: Legislação de transporte, normas de armazenagem, gestão de produtos especiais (perecíveis, perigosos, etc.).</li>
+                                </ul>
+                                
+                                <h4>Habilidades comportamentais:</h4>
+                                <ul>
+                                    <li><strong>Organização e planejamento</strong>: Capacidade de estruturar atividades e priorizar tarefas.</li>
+                                    <li><strong>Comunicação</strong>: Clareza na transmissão de informações e instruções.</li>
+                                    <li><strong>Trabalho em equipe</strong>: Colaboração e integração com diferentes áreas.</li>
+                                    <li><strong>Resolução de problemas</strong>: Análise crítica e tomada de decisão rápida.</li>
+                                    <li><strong>Adaptabilidade</strong>: Flexibilidade para lidar com mudanças e imprevistos.</li>
+                                    <li><strong>Liderança</strong>: Capacidade de motivar e desenvolver equipes (essencial para cargos de gestão).</li>
+                                    <li><strong>Visão sistêmica</strong>: Compreensão de como cada atividade impacta o processo como um todo.</li>
+                                </ul>
+                                
+                                <h4>Certificações valorizadas:</h4>
+                                <ul>
+                                    <li><strong>CPIM (Certified in Production and Inventory Management)</strong>: Foco em planejamento e controle de produção e estoques.</li>
+                                    <li><strong>CSCP (Certified Supply Chain Professional)</strong>: Visão integrada da cadeia de suprimentos.</li>
+                                    <li><strong>CLTD (Certified in Logistics, Transportation and Distribution)</strong>: Especialização em logística, transporte e distribuição.</li>
+                                    <li><strong>Green Belt/Black Belt</strong>: Certificações em metodologia Six Sigma.</li>
+                                    <li><strong>PMP (Project Management Professional)</strong>: Gestão de projetos, útil para implementações logísticas.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item fade-in delay-2">
+                            <div class="accordion-header">
+                                <span>Desenvolvimento Contínuo</span>
+                                <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <p>O setor logístico está em constante evolução, impulsionado por novas tecnologias, mudanças nos padrões de consumo e desafios globais. O desenvolvimento contínuo é essencial para manter-se relevante e competitivo neste mercado.</p>
+                                
+                                <h4>Estratégias para desenvolvimento profissional:</h4>
+                                <ul>
+                                    <li><strong>Educação formal</strong>: Cursos técnicos, graduação (Logística, Administração, Engenharia) e pós-graduação (especialização, MBA).</li>
+                                    <li><strong>Cursos livres</strong>: Capacitações específicas em áreas como gestão de estoques, transportes, comércio exterior.</li>
+                                    <li><strong>Certificações profissionais</strong>: Obtenção de certificações reconhecidas pelo mercado.</li>
+                                    <li><strong>Participação em eventos</strong>: Feiras, congressos e seminários da área logística.</li>
+                                    <li><strong>Networking</strong>: Construção de rede de contatos profissionais através de associações e grupos de discussão.</li>
+                                    <li><strong>Benchmarking</strong>: Visitas técnicas e troca de experiências com outras empresas e profissionais.</li>
+                                    <li><strong>Leitura especializada</strong>: Livros, revistas, blogs e sites sobre logística e supply chain.</li>
+                                </ul>
+                                
+                                <h4>Tendências e futuro da logística:</h4>
+                                <ul>
+                                    <li><strong>Automação e robotização</strong>: AGVs, robôs de separação, sistemas automatizados de armazenagem.</li>
+                                    <li><strong>Inteligência Artificial</strong>: Algoritmos preditivos para demanda, roteirização inteligente.</li>
+                                    <li><strong>Internet das Coisas (IoT)</strong>: Sensores para monitoramento em tempo real de estoques e transportes.</li>
+                                    <li><strong>Blockchain</strong>: Rastreabilidade e segurança nas transações da cadeia de suprimentos.</li>
+                                    <li><strong>Logística verde</strong>: Práticas sustentáveis, redução de emissões, economia circular.</li>
+                                    <li><strong>Last mile delivery</strong>: Soluções para entrega na última milha, incluindo drones e veículos autônomos.</li>
+                                    <li><strong>Omnichannel</strong>: Integração entre canais físicos e digitais, exigindo operações logísticas mais flexíveis.</li>
+                                </ul>
+                                
+                                <div class="example-box">
+                                    <h4><i class="fas fa-lightbulb" aria-hidden="true"></i> Exemplo prático:</h4>
+                                    <p>Maria trabalha como supervisora de estoque há cinco anos. Percebendo a crescente digitalização do setor, decidiu investir em seu desenvolvimento. Matriculou-se em um curso de especialização em Logística 4.0, participou de um grupo de estudos sobre automação de armazéns e visitou feiras tecnológicas do setor. Com esses conhecimentos, propôs e liderou a implementação de um sistema de gestão de estoque baseado em IoT na empresa, que reduziu em 30% o tempo de inventário e aumentou a acuracidade para 99,5%. Esta iniciativa não apenas melhorou os resultados da empresa, mas também posicionou Maria como referência em inovação logística, abrindo novas oportunidades de carreira.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Organograma Logístico -->
+        <section class="section" id="organograma">
+            <div class="module">
+                <h2 class="module-title"><i class="fas fa-sitemap" aria-hidden="true"></i> Organograma Logístico</h2>
+                <div class="module-content">
+                    <div class="accordion">
+                        <div class="accordion-item fade-in">
+                            <div class="accordion-header">
+                                <span>Estrutura Hierárquica em Logística</span>
+                                <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <p>O organograma logístico representa a estrutura hierárquica e as relações entre os diferentes cargos e funções dentro da área de logística de uma empresa. A estrutura pode variar conforme o tamanho e segmento da organização, mas geralmente segue um padrão similar ao apresentado abaixo.</p>
+                                
+                                <h4>Nível Estratégico:</h4>
+                                <ul>
+                                    <li><strong>Diretor de Logística/Supply Chain</strong>: Responsável pela definição das estratégias logísticas alinhadas aos objetivos do negócio, gestão de recursos e resultados globais da área.</li>
+                                </ul>
+                                
+                                <h4>Nível Tático:</h4>
+                                <ul>
+                                    <li><strong>Gerente de Logística</strong>: Implementa as estratégias definidas pela diretoria, coordena as diferentes áreas logísticas e responde pelos indicadores de desempenho.</li>
+                                    <li><strong>Gerente de Transportes</strong>: Responsável pela gestão da frota, roteirização, contratação de transportadoras e custos de frete.</li>
+                                    <li><strong>Gerente de Armazém/CD</strong>: Administra as operações do centro de distribuição, incluindo recebimento, armazenagem, separação e expedição.</li>
+                                    <li><strong>Gerente de Planejamento Logístico</strong>: Coordena o planejamento de demanda, níveis de estoque e programação de compras/produção.</li>
+                                </ul>
+                                
+                                <h4>Nível Operacional:</h4>
+                                <ul>
+                                    <li><strong>Supervisor de Recebimento</strong>: Coordena a equipe e os processos de recebimento e conferência de mercadorias.</li>
+                                    <li><strong>Supervisor de Armazenagem</strong>: Responsável pela organização do estoque, endereçamento e preservação dos produtos.</li>
+                                    <li><strong>Supervisor de Separação/Picking</strong>: Gerencia a equipe e os processos de separação de pedidos.</li>
+                                    <li><strong>Supervisor de Expedição</strong>: Coordena a conferência final, embalagem, etiquetagem e carregamento dos produtos.</li>
+                                    <li><strong>Analista de Estoque</strong>: Monitora níveis de estoque, realiza análises de giro, cobertura e obsolescência.</li>
+                                    <li><strong>Analista de Transportes</strong>: Acompanha fretes, roteirização e desempenho de transportadoras.</li>
+                                </ul>
+                                
+                                <h4>Nível Operacional Base:</h4>
+                                <ul>
+                                    <li><strong>Líder de Turno/Setor</strong>: Coordena pequenas equipes em áreas ou turnos específicos.</li>
+                                    <li><strong>Conferente</strong>: Realiza a verificação de mercadorias no recebimento e expedição.</li>
+                                    <li><strong>Operador de Empilhadeira</strong>: Movimenta cargas utilizando empilhadeiras.</li>
+                                    <li><strong>Estoquista</strong>: Executa atividades de armazenagem, organização e controle físico do estoque.</li>
+                                    <li><strong>Separador</strong>: Realiza a separação de produtos conforme pedidos.</li>
+                                    <li><strong>Auxiliar de Expedição</strong>: Apoia nas atividades de embalagem, etiquetagem e carregamento.</li>
+                                    <li><strong>Auxiliar de Logística</strong>: Executa atividades diversas de apoio às operações logísticas.</li>
+                                </ul>
+                                
+                                <h3>Funções e Responsabilidades</h3>
+                                
+                                <h4>Estoquista:</h4>
+                                <p>Profissional responsável pela organização, controle e movimentação de produtos no estoque. Suas principais atribuições incluem:</p>
+                                <ul>
+                                    <li>Receber e conferir mercadorias</li>
+                                    <li>Armazenar produtos nos locais designados</li>
+                                    <li>Separar itens conforme solicitações</li>
+                                    <li>Manter a organização e limpeza do estoque</li>
+                                    <li>Realizar contagens de inventário</li>
+                                    <li>Identificar produtos com avarias ou próximos ao vencimento</li>
+                                    <li>Auxiliar no carregamento e descarregamento de mercadorias</li>
+                                </ul>
+                                
+                                <h4>Almoxarife:</h4>
+                                <p>Profissional responsável pelo controle e gestão do almoxarifado, que geralmente armazena materiais de uso interno, insumos e peças de reposição. Suas principais atribuições incluem:</p>
+                                <ul>
+                                    <li>Receber e conferir materiais</li>
+                                    <li>Cadastrar itens no sistema</li>
+                                    <li>Controlar a entrada e saída de materiais</li>
+                                    <li>Organizar o espaço físico do almoxarifado</li>
+                                    <li>Atender requisições de materiais dos diversos setores</li>
+                                    <li>Elaborar relatórios de consumo e estoque</li>
+                                    <li>Realizar inventários periódicos</li>
+                                    <li>Solicitar reposição de itens quando necessário</li>
+                                </ul>
+                                
+                                <div class="example-box">
+                                    <h4><i class="fas fa-lightbulb" aria-hidden="true"></i> Exemplo prático:</h4>
+                                    <p>Uma empresa de médio porte do setor de varejo possui um centro de distribuição com a seguinte estrutura: um Gerente de Logística que responde diretamente ao Diretor de Operações; três Supervisores (Recebimento, Armazenagem e Expedição) que se reportam ao Gerente; cada Supervisor coordena dois Líderes de Turno; e cada Líder gerencia uma equipe de 5 a 8 colaboradores (Estoquistas, Conferentes, Operadores de Empilhadeira e Auxiliares). Esta estrutura permite uma clara definição de responsabilidades e um fluxo de comunicação eficiente, garantindo que as operações logísticas sejam executadas conforme os padrões estabelecidos.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Comparativo: Estoquista vs Almoxarife -->
+        <section class="section" id="comparativo">
+            <div class="module">
+                <h2 class="module-title"><i class="fas fa-balance-scale" aria-hidden="true"></i> Comparativo: Estoquista vs Almoxarife</h2>
+                <div class="module-content">
+                    <div class="accordion">
+                        <div class="accordion-item fade-in">
+                            <div class="accordion-header">
+                                <span>Diferenças e Semelhanças</span>
+                                <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <p>Embora muitas pessoas confundam as funções de estoquista e almoxarife, existem diferenças importantes entre esses dois profissionais. Ambos trabalham com gestão de materiais, mas atuam em contextos diferentes e com responsabilidades específicas.</p>
+                                
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Aspecto</th>
+                                            <th>Estoquista</th>
+                                            <th>Almoxarife</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Local de atuação</strong></td>
+                                            <td>Estoque de produtos acabados, centros de distribuição, lojas</td>
+                                            <td>Almoxarifado, depósitos de materiais de uso interno</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Tipo de materiais</strong></td>
+                                            <td>Produtos para venda, mercadorias para clientes</td>
+                                            <td>Materiais de uso interno, insumos, peças de reposição</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Foco principal</strong></td>
+                                            <td>Movimentação e disponibilidade de produtos</td>
+                                            <td>Controle e fornecimento de materiais</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Clientes atendidos</strong></td>
+                                            <td>Clientes externos (consumidores finais)</td>
+                                            <td>Clientes internos (outros departamentos)</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Atividades principais</strong></td>
+                                            <td>Recebimento, armazenagem, separação, expedição</td>
+                                            <td>Recebimento, cadastro, controle, atendimento de requisições</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Volume de operações</strong></td>
+                                            <td>Geralmente maior, com alta rotatividade</td>
+                                            <td>Geralmente menor, com rotatividade variável</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Sistemas utilizados</strong></td>
+                                            <td>WMS (Warehouse Management System)</td>
+                                            <td>Módulos de almoxarifado em ERP</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Formação típica</strong></td>
+                                            <td>Ensino médio, cursos técnicos em logística</td>
+                                            <td>Ensino médio, cursos técnicos em administração de materiais</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Habilidades específicas</strong></td>
+                                            <td>Agilidade, organização, trabalho em equipe</td>
+                                            <td>Atenção a detalhes, controle, conhecimento técnico de materiais</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                
+                                <h3>Semelhanças</h3>
+                                <p>Apesar das diferenças, estoquistas e almoxarifes compartilham várias características e responsabilidades:</p>
+                                <ul>
+                                    <li>Ambos trabalham com controle de entrada e saída de materiais</li>
+                                    <li>Realizam conferências e inventários periódicos</li>
+                                    <li>Precisam manter a organização e limpeza do ambiente</li>
+                                    <li>Utilizam sistemas informatizados para registro de movimentações</li>
+                                    <li>Necessitam de conhecimentos em armazenagem e preservação de materiais</li>
+                                    <li>Devem seguir procedimentos e normas de segurança</li>
+                                    <li>Precisam ter habilidades de comunicação e trabalho em equipe</li>
+                                </ul>
+                                
+                                <h3>Carreira e Desenvolvimento</h3>
+                                <p>Tanto estoquistas quanto almoxarifes podem evoluir em suas carreiras seguindo caminhos similares:</p>
+                                <ul>
+                                    <li><strong>Estoquista</strong>: Pode avançar para líder de estoque, supervisor de operações logísticas, analista de estoque e gerente de centro de distribuição.</li>
+                                    <li><strong>Almoxarife</strong>: Pode progredir para encarregado de almoxarifado, analista de materiais, supervisor de suprimentos e gerente de materiais.</li>
+                                </ul>
+                                
+                                <p>Para ambos os profissionais, a qualificação contínua é fundamental para o crescimento na carreira. Cursos técnicos, graduação em Logística ou áreas correlatas e certificações específicas podem abrir portas para posições de maior responsabilidade e remuneração.</p>
+                                
+                                <div class="example-box">
+                                    <h4><i class="fas fa-lightbulb" aria-hidden="true"></i> Exemplo prático:</h4>
+                                    <p>Em uma indústria de eletrodomésticos, o almoxarife é responsável pelo controle e fornecimento de componentes, peças de reposição e materiais de manutenção utilizados na linha de produção. Ele atende às requisições dos setores de produção e manutenção, controla o estoque mínimo desses itens e solicita reposições quando necessário. Já o estoquista trabalha no centro de distribuição da mesma empresa, lidando com os produtos acabados (geladeiras, fogões, etc.) que serão enviados para as lojas e clientes finais. Ele recebe os produtos da fábrica, armazena-os adequadamente, separa os pedidos conforme solicitações comerciais e prepara as cargas para expedição.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Seção de Doação -->
+    <div class="container">
+        <div class="donation-container">
+            <div class="donation-box">
+                <h3><i class="fas fa-hand-holding-heart" aria-hidden="true"></i> Apoie este Treinamento</h3>
+                <p>Se este conteúdo foi útil para você, considere fazer uma doação via PIX para ajudar a manter e melhorar este projeto.</p>
+                
+                <button id="donationButton" class="donation-btn">
+                    <i class="fas fa-qrcode" aria-hidden="true"></i> Mostrar QR Code PIX
+                </button>
+                
+                <div id="pixDetails" class="pix-details">
+                    <div class="pix-info">
+                        <p><strong>Nome:</strong> Matheus Castro Mendes</p>
+                        <p><strong>Chave PIX:</strong> +55 98 98567-8614</p>
+                        <div class="pix-qrcode">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=00020126360014BR.GOV.BCB.PIX0114+55989856786145204000053039865802BR5921Matheus%20Castro%20Mendes6009SAO%20PAULO62140510hKQcqTeXKC63042AC5" 
+                                 alt="QR Code PIX para doação" width="200" height="200" loading="lazy">
+                        </div>
+                        <p class="instruction">Escaneie o QR Code ou copie a chave PIX</p>
+                        <button id="copyPixBtn" class="copy-btn">
+                            <i class="fas fa-copy" aria-hidden="true"></i> Copiar Chave
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botão Voltar ao Topo -->
+    <a href="#" class="back-to-top" aria-label="Voltar ao topo"><i class="fas fa-arrow-up" aria-hidden="true"></i></a>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-contact">
+                    <h3>Matheus Castro Mendes</h3>
+                    <p>Logística - Gestão de Estoques</p>
+                    <p><i class="fas fa-phone" aria-hidden="true"></i> (98) 98133-7601</p>
+                    <p><i class="fas fa-envelope" aria-hidden="true"></i> matheusmendespessoal@gmail.com</p>
+                    <p><i class="fas fa-map-marker-alt" aria-hidden="true"></i> São Luís, MA</p>
+                    
+                    <div class="social-links">
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
+                        <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+                
+                <div class="quick-links">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="#intro"><i class="fas fa-chevron-right" aria-hidden="true"></i> Introdução</a></li>
+                        <li><a href="#modulo1"><i class="fas fa-chevron-right" aria-hidden="true"></i> Fundamentos</a></li>
+                        <li><a href="#modulo2"><i class="fas fa-chevron-right" aria-hidden="true"></i> Operações</a></li>
+                        <li><a href="#modulo3"><i class="fas fa-chevron-right" aria-hidden="true"></i> Abastecimento</a></li>
+                        <li><a href="#modulo4"><i class="fas fa-chevron-right" aria-hidden="true"></i> Controle</a></li>
+                        <li><a href="#modulo5"><i class="fas fa-chevron-right" aria-hidden="true"></i> Melhoria</a></li>
+                        <li><a href="#moduloextra"><i class="fas fa-chevron-right" aria-hidden="true"></i> Carreira</a></li>
+                    </ul>
+                </div>
+                
+                <div class="newsletter">
+                    <h4>Receba Atualizações</h4>
+                    <p>Cadastre-se para receber novos materiais e atualizações do curso.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Seu melhor e-mail" required>
+                        <button type="submit"><i class="fas fa-paper-plane" aria-hidden="true"></i></button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 Treinamento Estoque e Logística. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Botão Voltar ao Topo
+        document.addEventListener('DOMContentLoaded', function() {
+            var backToTopButton = document.querySelector('.back-to-top');
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.classList.add('visible');
+                } else {
+                    backToTopButton.classList.remove('visible');
+                }
+            });
+            
+            backToTopButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Navegação suave para links âncora
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            
+            // Progress Bar
+            window.addEventListener('scroll', function() {
+                var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                var scrolled = (winScroll / height) * 100;
+                document.getElementById("progressBar").style.width = scrolled + "%";
+            });
+            
+            // Accordion
+            const accordionHeaders = document.querySelectorAll('.accordion-header');
+            
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const accordionItem = header.parentElement;
+                    const accordionContent = header.nextElementSibling;
+                    
+                    // Close all other accordion items
+                    document.querySelectorAll('.accordion-content').forEach(content => {
+                        if (content !== accordionContent) {
+                            content.classList.remove('show');
+                            content.previousElementSibling.classList.remove('active');
+                        }
+                    });
+                    
+                    // Toggle current item
+                    header.classList.toggle('active');
+                    accordionContent.classList.toggle('show');
+                });
+            });
+            
+            // Ativar primeiro item do accordion
+            document.querySelectorAll('.accordion').forEach(accordion => {
+                const firstHeader = accordion.querySelector('.accordion-header');
+                if (firstHeader) {
+                    firstHeader.classList.add('active');
+                    firstHeader.nextElementSibling.classList.add('show');
+                }
+            });
+            
+            // Scroll Spy para navegação
+            const sections = document.querySelectorAll('.section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            window.addEventListener('scroll', () => {
+                let current = '';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    
+                    if (pageYOffset >= (sectionTop - 200)) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('data-section') === current) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+            
+            // Animação de fade-in para elementos
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            const fadeInObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                        fadeInObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            fadeElements.forEach(element => {
+                element.style.opacity = 0;
+                element.style.transform = 'translateY(20px)';
+                element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                fadeInObserver.observe(element);
+            });
+            
+            // Header shrink on scroll
+            const header = document.getElementById('mainHeader');
+            const nav = document.getElementById('mainNav');
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.style.padding = '0.5rem 0';
+                    nav.style.padding = '0.5rem 0';
+                } else {
+                    header.style.padding = '1rem 0';
+                    nav.style.padding = '0.75rem 0';
+                }
+            });
+
+            // Botão de Doação PIX
+            const donationButton = document.getElementById('donationButton');
+            const pixDetails = document.getElementById('pixDetails');
+            const copyPixBtn = document.getElementById('copyPixBtn');
+            
+            // Mostrar/ocultar detalhes do PIX
+            if (donationButton && pixDetails) {
+                donationButton.addEventListener('click', function() {
+                    if (pixDetails.style.display === 'none' || !pixDetails.style.display) {
+                        pixDetails.style.display = 'block';
+                        this.innerHTML = '<i class="fas fa-times" aria-hidden="true"></i> Fechar';
+                    } else {
+                        pixDetails.style.display = 'none';
+                        this.innerHTML = '<i class="fas fa-qrcode" aria-hidden="true"></i> Mostrar QR Code PIX';
+                    }
+                });
+            }
+            
+            // Copiar chave PIX
+            if (copyPixBtn) {
+                copyPixBtn.addEventListener('click', function() {
+                    navigator.clipboard.writeText('+55 98 98567-8614').then(() => {
+                        this.innerHTML = '<i class="fas fa-check" aria-hidden="true"></i> Copiado!';
+                        setTimeout(() => {
+                            this.innerHTML = '<i class="fas fa-copy" aria-hidden="true"></i> Copiar Chave';
+                        }, 2000);
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
